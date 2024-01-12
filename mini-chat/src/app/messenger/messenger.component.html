@@ -1,0 +1,16 @@
+@if (loggedIn){
+    <send-message (send)="send($event)" />
+    } @else {
+    <input type="text" [(ngModel)]="username" />
+    <button (click)="login()">Connexion</button>
+    } 
+    <!-- <button (click)="getDadJoke()">Dad joke</button> -->
+    @for(item of array; track $index) {
+    <div @fadeIn class="m-4 p-4  rounded " [ngClass]="{
+      'mr-14 bg-gray-200' : item.username != username,
+      'ml-14 bg-blue-600' : item.username == username
+    }">
+      <p>{{ item.username }}</p>
+      <p [innerHTML]="item.content | parseLink"></p>
+    </div>
+    }
