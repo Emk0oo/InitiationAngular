@@ -5,7 +5,8 @@ import { RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { SendMessageComponent } from './send.message.component';
 import { HttpClient } from '@angular/common/http';
-import { interval } from 'rxjs';
+import { fromEvent, interval } from 'rxjs';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 interface Message {
   username: string;
@@ -31,6 +32,14 @@ interface DadJoke {
   selector: 'app-root',
   standalone: true,
   imports: [CommonModule, FormsModule, SendMessageComponent],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('150ms', style({ opacity: 1}))
+      ])
+    ])
+  ],
   template: `
     @if (loggedIn){
     <send-message (send)="send($event)" />
@@ -40,7 +49,7 @@ interface DadJoke {
     } 
     <button (click)="getDadJoke()">Dad joke</button>
     @for(item of array; track $index) {
-    <div class="m-4 p-4  rounded " [ngClass]="{
+    <div @fadeIn class="m-4 p-4  rounded " [ngClass]="{
       'mr-14 bg-gray-200' : item.username != username,
       'ml-14 bg-blue-600' : item.username == username
     }">
@@ -61,9 +70,16 @@ export class AppComponent {
   interval= interval(15000);
 
   constructor(){
-    this.interval.subscribe(()=>{
-      this.getDadJoke();
+    fromEvent(window, 'storage').subscribe((event)=> {
+      let messages = localStorage.getItem("messages");
+      if(messages){
+        let parsedMessages = JSON.parse(messages);
+        this.array = parsedMessages;
+      }
     })
+    // this.interval.subscribe(()=>{
+    //   this.getDadJoke();
+    // })
   }
 
 
@@ -73,6 +89,7 @@ export class AppComponent {
         username: this.username,
         content: message,
     });
+    localStorage.setItem("messages", JSON.stringify(this.array)); //remplacer array par messages si fonctionne pas 
 
     }
   }
