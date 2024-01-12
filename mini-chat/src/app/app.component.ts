@@ -45,6 +45,8 @@ import { ParseLinkPipe } from './parse-link.pipe';
    <div class="p-2 w-full flex gap-2 bg-sky-900 text-white">
         <a class="hover:text-sky-200" routerLink="/messenger">Chat</a>
         <a class="hover:text-sky-200" routerLink="/projet">Projet</a>
+        <a class="hover:text-sky-200" routerLink="/login">Login</a>
+
     </div>
     <router-outlet></router-outlet>
   `,
