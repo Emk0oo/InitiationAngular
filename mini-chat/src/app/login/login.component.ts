@@ -8,22 +8,21 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
 })
 export class LoginComponent {
+  isAuth = false;
+  isAuth$ = new BehaviorSubject(this.isAuth);
+  authService = inject(AuthService);
+  router = inject(Router);
 
-  isAuth= false;
-  isAuth$= new BehaviorSubject(this.isAuth);
-  authService= inject(AuthService);
-  router= inject(Router);
+  ngOnInit() {
+    this.authService.isAuth$.subscribe((e) => {
+      if (e) this.router.navigate(['/']);
+    });
+  }
 
-  ngOnInit(){
-    this.authService.isAuth$.subscribe(e => {
-      if(e) this.router.navigate(['/']);
-
-    })}
-
-  login(){
+  login() {
     this.authService.login();
     this.isAuth$.next(this.isAuth);
   }

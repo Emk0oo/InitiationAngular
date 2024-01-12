@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from "@angular/core";
+import {Component, EventEmitter, HostListener, OnInit, Output} from "@angular/core";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @Component(
@@ -17,6 +17,11 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
   })
 export class SendMessageComponent{
   message="";
+
+  @HostListener("mouseenter", ["$event"]) 
+  hover(event: Event){
+    console.log(event);
+  }
 
   @Output()
   send = new EventEmitter<string>();
