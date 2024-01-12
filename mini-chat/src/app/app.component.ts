@@ -41,6 +41,11 @@ import { ParseLinkPipe } from './parse-link.pipe';
       ])
     ])
   ],
+  styles: `
+    :host {
+      @apply block h-screen;
+    }
+  `,
   template: `
    <div class="p-2 w-full flex gap-2 bg-sky-900 text-white">
         <a class="hover:text-sky-200" routerLink="/messenger">Chat</a>
