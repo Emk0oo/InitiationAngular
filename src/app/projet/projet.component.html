@@ -1,6 +1,12 @@
-<div>
+<!-- <div>
+  
   <div id="barreDeRecherche" class="flex w-full m-1 p-4 space-x-2">
+<<<<<<< HEAD:src/app/projet/projet.component.html
     <input type="text" class="w-full border border-slate-600" />
+=======
+    <h1>{{projet.title}}</h1>
+    <input type="text" class="w-full border" />
+>>>>>>> 7851bde5e72411e7578b6572e1ca43fd0e0431df:mini-chat/src/app/projet/projet.component.html
     <button class="bg-grey-200">Discard</button>
     <button class="bg-green-200">Save</button>
   </div>
@@ -19,4 +25,39 @@
       <p class="text-center">Done</p>
     </div>
   </div>
-</div>
+</div> -->
+
+<section class="bg-slate-100 p-4">
+  <form [formGroup]="projetForm" class="flex flex-col gap-2 w-full max-w-xl mx-auto">
+    <label>Titre</label>
+    <input class="w-full h-10" [formControl]="projetForm.controls.title" type="text" />
+    <label>Identifiant</label>
+    <input class="w-full h-10" [formControl]="projetForm.controls.id" type="text" />
+    <label>Status</label>
+    @for(control of projetForm.controls.status.controls; track $index){
+      <input [formControl]="control"/>
+    }
+    <button class="bg-green-500" (click)="addStatus()">Ajouter un statut</button>
+    <label>Tache</label>
+    @for(control of projetForm.controls.tasks.controls; track $index){
+      <div class="flex flex-col">
+        <label>Titre</label>
+        <input type="text" [formControl]="control.controls.title"/>
+        <input type="text" [formControl]="control.controls.title"/>
+        <label>Option</label>
+        <select>
+          @for(option of projetForm.controls.status.value; track $index){
+            <option [value]="option">{{option}}</option>
+          }
+        </select>
+        <label>Date start</label>
+        <input type="date" [formControl]="control.controls.start"/>
+        <label>Date end</label>
+        <input type="date" [formControl]="control.controls.end"/>
+
+      </div>
+    }
+    <button class="bg-green-500" (click)="addTasks()">Ajouter une tache</button>
+  </form>
+
+</section>
